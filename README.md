@@ -23,24 +23,31 @@
 ## Пример работы
 ### Меню
 
-![](<Снимок экрана 2026-05-24 в 17.45.15.png>)
+<img width="373" height="172" alt="Снимок экрана 2026-05-24 в 17 45 15" src="https://github.com/user-attachments/assets/e12bd9a9-f64b-44a6-96ec-8ea338241fa5" />
 
 ### Посещение
-![](<Снимок экрана 2026-05-24 в 17.52.11.png>)
+<img width="425" height="289" alt="Снимок экрана 2026-05-24 в 17 52 11" src="https://github.com/user-attachments/assets/7c512f23-3a2d-4b34-b2a4-fea0051ae226" />
+
 ### Поиск
-![alt text](<Снимок экрана 2026-05-24 в 17.55.20.png>)
+<img width="750" height="123" alt="Снимок экрана 2026-05-24 в 17 55 20" src="https://github.com/user-attachments/assets/348da52e-c92c-4769-bc3c-02ae33f88880" />
+
 
 ### Время посещения за опр отрезок времени
 
-![alt text](<Снимок экрана 2026-05-24 в 17.57.44.png>)
+<img width="838" height="161" alt="Снимок экрана 2026-05-24 в 17 57 44" src="https://github.com/user-attachments/assets/2cf8db20-dea4-44b3-86ea-5a0a1c7bc3b3" />
+
 
 
 ### Навигация вперед/назад
-![alt text](<Снимок экрана 2026-05-24 в 18.00.02.png>)![alt text](<Снимок экрана 2026-05-24 в 18.00.18.png>)
+<img width="847" height="94" alt="Снимок экрана 2026-05-24 в 18 00 18" src="https://github.com/user-attachments/assets/447b6c0c-0fb9-4f68-aaa0-393149ca140f" />
+<img width="815" height="102" alt="Снимок экрана 2026-05-24 в 18 00 02" src="https://github.com/user-attachments/assets/f6ed8c50-a71c-4f6e-9bff-e4037f78984e" />
+
 ### Сохранение в Base-64
-![alt text](<Снимок экрана 2026-05-24 в 18.02.57.png>)
-![alt text](<Снимок экрана 2026-05-24 в 18.03.17.png>)
+<img width="412" height="200" alt="Снимок экрана 2026-05-24 в 18 02 57" src="https://github.com/user-attachments/assets/2072984b-9966-4ac9-8e31-f67a46a805ba" />
+<img width="636" height="120" alt="Снимок экрана 2026-05-24 в 18 03 17" src="https://github.com/user-attachments/assets/7607cb04-7cb8-454b-9482-16a791e12bee" />
+
 
 ###Загрузка из Base-64
 
-![alt text](<Снимок экрана 2026-05-24 в 18.08.58.png>)
+<img width="764" height="340" alt="Снимок экрана 2026-05-24 в 18 08 58" src="https://github.com/user-attachments/assets/c4e236f9-19f8-400b-82ed-c078a64370c6" />
+
