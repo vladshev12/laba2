@@ -68,7 +68,7 @@ class List:
         else:
             print("Это конец истории")
 
-    def toggle_bookmark(self):
+    def bookmark(self):
         if self.current:
             self.current.page.bookmark = not self.current.page.bookmark
             print("Закладка изменена")
@@ -227,7 +227,7 @@ while True:
     elif choice == "3":
         history.forward()
     elif choice == "4":
-        history.toggle_bookmark()
+        history.bookmark()
     elif choice == "5":
         domen = input("Введите URL: ")
         history.search(domen)
