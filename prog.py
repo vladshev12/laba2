@@ -1,0 +1,247 @@
+import time
+import base64
+from datetime import datetime
+import re
+
+class BrowserHistory:
+    def __init__(self, url: str = None,
+                 visit_time: float = None,
+                 bookmark: bool = False):
+
+        self.url = url
+        self.visit_time = visit_time if visit_time else time.time()
+        self.bookmark = bookmark
+
+
+class Node:
+    def __init__(self, page):
+        self.page = page
+        self.prev = None
+        self.next = None
+
+
+class List:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.current = None
+        self.size = 0
+
+
+    def insert_begin(self, page):
+        new_node = Node(page)
+
+        if not self.head:
+            self.head = self.tail =  new_node
+        else:
+            new_node.next = self.head
+            self.head.prev = new_node
+            self.head = new_node
+
+        self.size += 1
+
+    def insert_end(self, page):
+        new_node = Node(page)
+
+        if not self.tail:
+            self.tail = self.head = self.current = new_node
+        else:
+            new_node.prev = self.tail
+            self.tail.next = new_node
+            self.tail = new_node
+
+        self.current = new_node
+        self.size += 1
+
+    def visit(self, url):
+        page = BrowserHistory(url)
+        self.insert_end(page)
+
+    def back(self):
+        if self.current and self.current.prev:
+            self.current = self.current.prev
+        else:
+            print("Это начало истории")
+    def forward(self):
+        if self.current and self.current.next:
+            self.current = self.current.next
+        else:
+            print("Это конец истории")
+
+    def bookmark(self):
+        if self.current:
+            self.current.page.bookmark = not self.current.page.bookmark
+            print("Закладка изменена")
+
+    def format_time(self, t):
+        return datetime.fromtimestamp(t).strftime("%H:%M:%S")
+
+    def print_history(self):
+        if not self.head:
+            print("\nИстория пуста")
+            return
+        temp = self.head
+        print("\n------------------------------------------------------")
+        print(f"{'Время':10} | {'URL':25} | Закладка")
+        print("------------------------------------------------------")
+
+        while temp:
+            mark = ">" if temp == self.current else " "
+            print(
+                f"{mark} "
+                f"{self.format_time(temp.page.visit_time)} | "
+                f"{temp.page.url:<25} | "
+                f"{'[X]' if temp.page.bookmark else '[ ]'}"
+            )
+            temp = temp.next
+    def search(self, domen):
+        temp = self.head
+        number = 1
+        while temp:
+            if domen in temp.page.url:
+                print("\nНайдено:")
+                print("Номер:", number)
+                print("URL:", temp.page.url)
+                print("Время:", self.format_time(temp.page.visit_time))
+                print("Закладка:",
+                      "Да" if temp.page.bookmark else "Нет")
+                return
+            temp = temp.next
+            number += 1
+        print("Ничего не найдено")
+
+    def clear(self):
+        self.head = None
+        self.tail = None
+        self.current = None
+        self.size = 0
+
+        print("История очищена")
+    def save(self):
+        filename = input("Введите имя файла: ")
+        with open(filename, "w", encoding="utf-8") as file:
+            temp = self.head
+            while temp:
+                data = (
+                    f"{temp.page.url}|"
+                    f"{temp.page.visit_time}|"
+                    f"{1 if temp.page.bookmark else 0}"
+                )
+                encoded = base64.b64encode(
+                    data.encode()
+                ).decode()
+                file.write(encoded + "\n")
+                temp = temp.next
+        print("История сохранена")
+    def load(self):
+        filename = input("Введите имя файла: ")
+        try:
+            with open(filename, "r", encoding="utf-8") as file:
+
+
+                for line in file:
+
+                    decoded = base64.b64decode(
+                        line.strip()
+                    ).decode()
+                    url, visit_time, bookmark = decoded.split("|")
+
+                    page = BrowserHistory(
+                        url,
+                        float(visit_time),
+                        bookmark == "1"
+                    )
+                    self.insert_end(page)
+
+            print("История загружена")
+
+        except FileNotFoundError:
+            print("Файл не найден")
+
+    def find_time_by_period(self):
+        if not self.head:
+            print("История пуста")
+            return
+
+        pat = r'^\d{2}:\d{2}:\d{2}$'
+
+        start = input("Начальное время (hh:mm:ss): ").strip()
+        end = input("Конечное время (hh:mm:ss): ").strip()
+
+        if not re.match(pat, start) or not re.match(pat, end):
+            print("Неверный формат времени")
+            return
+
+        start_ = datetime.strptime(start, "%H:%M:%S").time()
+        end_ = datetime.strptime(end, "%H:%M:%S").time()
+
+        if start_ > end_:
+            print("Начальное время больше конечного")
+            return
+
+        temp = self.head
+        found = 0
+
+        print("\nИстория за период:")
+        print("------------------------------------------------------")
+        print(f"{'Время':10} | {'URL':25} | Закладка")
+        print("------------------------------------------------------")
+
+        while temp:
+            visit_ = datetime.fromtimestamp(temp.page.visit_time).time()
+
+            if start_ <= visit_ <= end_:
+                print(
+                    f"{visit_.strftime('%H:%M:%S')} | "
+                    f"{temp.page.url:<25} | "
+                    f"{'[X]' if temp.page.bookmark else '[ ]'}"
+                )
+                found += 1
+
+            temp = temp.next
+
+        if found == 0:
+            print("Ничего не найдено")
+        else:
+            print(f"\nНайдено: {found}")
+            
+history = List()
+while True:
+    print("\n1. Перейти")
+    print("2. Назад")
+    print("3. Вперёд")
+    print("4. Закладка")
+    print("5. Поиск")
+    print("6. Очистить")
+    print("7. Сохранить")
+    print("8. Загрузить")
+    print("9. Показать всю историю")
+    print("10. Показать историю за определенный период времени")
+    print("0. Выход")
+    choice = input("Выбор: ")
+    if choice == "1":
+        url = input("Введите URL: ")
+        history.visit(url)
+    elif choice == "2":
+        history.back()
+    elif choice == "3":
+        history.forward()
+    elif choice == "4":
+        history.bookmark()
+    elif choice == "5":
+        domen = input("Введите URL: ")
+        history.search(domen)
+    elif choice == "6":
+        history.clear()
+    elif choice == "7":
+        history.save()
+    elif choice == "8":
+        history.load()
+    elif choice == "9":
+        history.print_history()
+    elif choice == "10":
+        history.find_time_by_period()
+    elif choice == "0":
+        break
+    else:
+        print("Неверный ввод")
