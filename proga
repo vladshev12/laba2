@@ -172,10 +172,10 @@ class List:
             print("Неверный формат времени")
             return
 
-        start_obj = datetime.strptime(start, "%H:%M:%S").time()
-        end_obj = datetime.strptime(end, "%H:%M:%S").time()
+        start_ = datetime.strptime(start, "%H:%M:%S").time()
+        end_ = datetime.strptime(end, "%H:%M:%S").time()
 
-        if start_obj > end_obj:
+        if start_ > end_:
             print("Начальное время больше конечного")
             return
 
@@ -188,11 +188,11 @@ class List:
         print("------------------------------------------------------")
 
         while temp:
-            visit_obj = datetime.fromtimestamp(temp.page.visit_time).time()
+            visit_ = datetime.fromtimestamp(temp.page.visit_time).time()
 
-            if start_obj <= visit_obj <= end_obj:
+            if start_ <= visit_ <= end_:
                 print(
-                    f"{visit_obj.strftime('%H:%M:%S')} | "
+                    f"{visit_.strftime('%H:%M:%S')} | "
                     f"{temp.page.url:<25} | "
                     f"{'[X]' if temp.page.bookmark else '[ ]'}"
                 )
