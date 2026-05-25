@@ -28,17 +28,6 @@ class List:
         self.size = 0
 
 
-    def insert_begin(self, page):
-        new_node = Node(page)
-
-        if not self.head:
-            self.head = self.tail =  new_node
-        else:
-            new_node.next = self.head
-            self.head.prev = new_node
-            self.head = new_node
-
-        self.size += 1
 
     def insert_end(self, page):
         new_node = Node(page)
